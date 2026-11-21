@@ -1,122 +1,101 @@
-# Microprocessor & Embedded Systems Laboratory
+# Microprocessor & Embedded Systems Firmware Suite
 
-This repository contains the complete laboratory curriculum and implementation for the **Microprocessor Laboratory** course at **Amirkabir University of Technology (Tehran Polytechnic) - Department of Computer Engineering**, based on the official laboratory manual (*دستور کار آزمایشگاه ریزپردازنده*).
-
-The projects are implemented for the **Arduino Mega 2560 (Atmel ATmega2560)** platform, modeled and simulated in **Proteus VSM**, and accompanied by technical laboratory reports and firmware source code.
+A collection of 9 modular embedded firmware systems and circuit designs implemented in C/C++ on the **ATmega2560 (Arduino Mega 2560)** architecture, modeled and verified via **Proteus VSM** interactive circuit simulation.
 
 ---
 
-## Laboratory Modules & Implemented Systems
+## Systems & Firmware Architecture
 
-### Lab 1: Getting Started with ATmega2560 & Circuit Simulation (`microProcessorLab1/`)
-* **Objective:** Board initialization, input/output port configuration, and Proteus simulation workflow.
-* **Hardware & Circuits:** Arduino Mega 2560, LED array, pushbuttons, current-limiting resistors ($220\,\Omega$), pull-up/pull-down resistors ($10\,\text{k}\Omega$).
-* **Firmware Logic:** Multi-button state machine:
-  * Button 1: Sequentially activates LEDs one by one from left to right.
-  * Button 2: Sequentially activates LEDs one by one from right to left.
-  * Button 3: Global reset turning off all LEDs.
-* **Deliverables:** Proteus schematics (`lab1version2.pdsprj`, `New Project.pdsprj`), compiled HEX binaries, and technical documentation.
-
----
-
-### Lab 2: Matrix Keypad Interfacing & Serial Communication (`microlab2/`)
-* **Objective:** Non-blocking user input parsing, contact bounce mitigation, and hardware UART serial data transfer.
-* **Hardware & Protocols:** $4\times 3$ / $4\times 4$ Matrix Keypad, Virtual Terminal, Oscilloscope, UART serial interface (`Serial`, `Serial1`–`Serial3`).
-* **Firmware Logic:** Row-column matrix scanning (`Keypad.h`), switch debouncing algorithms, serial packet transmission, and oscilloscope verification of UART baud rates and start/stop bit timing.
-* **Deliverables:** Schematic (`microlab2.pdsprj`), firmware (`microlab2 code.txt`), and lab report.
+### 1. Multi-Directional GPIO State Controller (`microProcessorLab1/`)
+* **System Function:** Manages bi-directional sequential illumination across an 8-LED output array driven by an asynchronous 3-button digital state machine.
+* **Firmware Implementation:**
+  * Left-to-Right Scan: Progressively indexes and latches active LED output pins with millisecond debounce filtering.
+  * Right-to-Left Scan: Reverse-direction shifting algorithm.
+  * Synchronous Clear: Resets the entire port output register to zero.
+* **Circuit Design:** Interfaced with $220\,\Omega$ current-limiting series resistors and $10\,\text{k}\Omega$ pull-down networks in Proteus.
 
 ---
 
-### Lab 3: Output Display & Hardware Calculator (`MicroLab3/`)
-* **Objective:** Interfacing character LCD displays, bus mode comparisons, and building an interactive embedded calculator.
-* **Hardware:** $16\times 2$ Alphanumeric Character LCD (HD44780 controller equivalent), $4\times 4$ Matrix Keypad, potentiometer contrast control ($V_O$).
-* **Firmware Logic:** 
-  * Implemented and compared both **4-bit** and **8-bit** parallel LCD bus modes with RS (Register Select), RW, and Enable strobe timing (`LiquidCrystal.h`).
-  * Continuous marquee scrolling banner shifting text across line 1 and wrapping to line 2.
-  * 4-digit PIN authentication security lock with `*` verification ("password correct" / "password wrong").
-  * 4-function non-floating integer calculator parsing keypad expressions (e.g. `59+23=`) and formatting real-time output.
-* **Deliverables:** Firmware source code, simulation hex files, and technical laboratory report.
+### 2. Matrix Keypad Scanning & UART Serial Telemetry (`microlab2/`)
+* **System Function:** Non-blocking matrix keypad input decoding paired with full-duplex hardware UART serial communication.
+* **Firmware Implementation:**
+  * Implemented row-column scanning across $4\times 3$ and $4\times 4$ key matrices using timed pin toggling.
+  * Integrated software debouncing to suppress mechanical switch contact bounce.
+  * Transmits and receives formatted ASCII data packets over hardware serial ports (`Serial`, `Serial1`–`Serial3`).
+* **Instrumentation:** Validated serial frame timing, start/stop bit transitions, and baud rates using the Proteus Virtual Terminal and Oscilloscope.
 
 ---
 
-### Lab 4: Precision Servomotor Actuation & Analog Input (`microlab4_9731131_mahdi afarideh/`)
-* **Objective:** Servomotor angular position control ($0^\circ-180^\circ$) via Pulse Width Modulation (PWM) and analog-to-digital conversion (ADC).
-* **Hardware:** TowerPro SG90 Servomotor, $10\,\text{k}\Omega$ linear potentiometer, matrix keypad, oscilloscope.
-* **Firmware Logic:**
-  * Configured $50\,\text{Hz}$ PWM control signals ($20\,\text{ms}$ frame period, $1.0-2.0\,\text{ms}$ pulse width for angular displacement).
-  * Oscilloscope verification of fundamental period ($T$) and duty cycle across varied angular positions.
-  * Closed-loop servo tracking dynamically mapped from analog potentiometer readings (`analogRead()`, `map()`).
-  * Keypad-commanded angular indexing ($-90^\circ$ to $+90^\circ$).
-* **Deliverables:** Proteus simulation (`microlab4.pdsprj`), firmware (`code.txt`), oscilloscope timing captures, and report.
+### 3. Alphanumeric LCD Bus Driver & Embedded Calculator (`MicroLab3/`)
+* **System Function:** High-speed alphanumeric text rendering and an embedded four-function integer arithmetic calculation engine.
+* **Firmware Implementation:**
+  * Parallel bus interfacing for standard HD44780-compatible $16\times 2$ character LCDs, evaluating both **4-bit nibble mode** and **8-bit parallel mode** with Register Select (RS), Read/Write (RW), and Enable strobe timing.
+  * Continuous horizontal marquee scroll engine shifting character buffers across line 1 and wrapping around to line 2.
+  * Security Access Controller: Verifies a 4-digit PIN against internal memory with masked LCD feedback and status banners.
+  * Hardware Calculator: Real-time keypad character stream tokenizer supporting addition, subtraction, multiplication, and integer division.
 
 ---
 
-### Lab 5: Transistorized Relay Switching & High-Current Loads (`microlab5_9731131_mahdi afarideh/`)
-* **Objective:** Controlling high-voltage/high-current DC loads safely using electromechanical relays and transistor driver stages.
-* **Hardware:** SPDT 5V Electromechanical Relay, NPN BJT Transistor (2N2222), flyback diode, DC motor, LED indicator, voltmeter, ammeter.
-* **Circuit Design & Analysis:**
-  * Analyzed ATmega2560 GPIO sink/source current limitations ($40\,\text{mA}$ absolute maximum) and calculated why relay coils require external transistor drivers.
-  * Designed BJT common-emitter switch operating strictly in the **saturation region** ($I_B > I_{C(\text{sat})} / \beta$) to minimize collector-emitter drop ($V_{CE(\text{sat})} \approx 0.1-0.2\,\text{V}$).
-  * Integrated a flyback freewheeling diode across the inductive relay coil to suppress high-voltage inductive kickback ($V = -L \frac{di}{dt}$).
-* **Deliverables:** Schematics (`microlab5p0.pdsprj`, `oslab5p1.pdsprj`), firmware, and comprehensive design report.
+### 4. Precision PWM Servomotor Actuator & ADC Tracking (`microlab4_9731131_mahdi afarideh/`)
+* **System Function:** Angular position control ($0^\circ-180^\circ$) of servomotors using timer-driven Pulse Width Modulation (PWM) and closed-loop analog feedback.
+* **Firmware Implementation:**
+  * Generated precise $50\,\text{Hz}$ PWM signals ($20\,\text{ms}$ period with $1.0\,\text{ms}-2.0\,\text{ms}$ active duty cycle pulses) mapped to angular position.
+  * Integrated an analog potentiometer voltage divider via on-chip 10-bit Analog-to-Digital Converter (ADC) for continuous closed-loop position tracking.
+  * Configured serial command interface and matrix keypad input to command discrete angular setpoints ($-90^\circ$ to $+90^\circ$).
 
 ---
 
-### Lab 6: Midterm Capstone - Multi-Servo Automated Vending Machine (`microLab6/`)
-* **Objective:** Systems integration combining multi-actuator control, user authentication, and inventory dispensing.
-* **System Design (*"یعقوب برقی رایگان!"*):**
-  * 12 independent servomotor-driven dispensing coils assigned to individual inventory shelves.
-  * 7-digit administrative master passcode authentication via keypad for restocking mode.
-  * Two-digit customer product selection with quantity tracking and confirmation on $16\times 2$ LCD.
-  * Status indicator lighting and door-actuation mechanisms.
-* **Deliverables:** Complete multi-hex build suite (individual servo calibration binaries), master firmware (`code.txt`), and lab report.
+### 5. Transistorized Relay Switching & Inductive Load Driver (`microlab5_9731131_mahdi afarideh/`)
+* **System Function:** High-current/high-voltage DC actuator switching circuit designed to isolate microcontroller logic from noisy inductive loads.
+* **Circuit Design & Electrical Analysis:**
+  * Solved the GPIO pin drive limitation ($40\,\text{mA}$ absolute maximum) by designing a discrete NPN BJT driver (2N2222) operating strictly in the **saturation region** ($I_B > I_{C(\text{sat})}/\beta$) to minimize conduction losses ($V_{CE(\text{sat})} \approx 0.1-0.2\,\text{V}$).
+  * Added a parallel flyback (freewheeling) diode across the relay coil to safely clamp inductive back-EMF transients ($V = -L \frac{di}{dt}$) during de-energization.
+  * Controlled high-current DC motors and dual-state status indicators via an SPDT electromechanical relay.
 
 ---
 
-### Lab 7: Fault-Tolerant Washing Machine with TWI / I2C & EEPROM Persistence (`microlab7 9731131 mahdi afarideh/`)
-* **Objective:** Master Two-Wire Interface (TWI / $\text{I}^2\text{C}$) communication, external EEPROM read/write cycles, and power-loss fault recovery.
-* **Hardware & Protocols:** Atmel AT24C02 External EEPROM ($2\,\text{Kbit}$ serial memory), $16\times 2$ LCD, $4\times 4$ Keypad, status LEDs, TWI bus (SDA, SCL with pull-ups).
-* **Firmware Architecture & Analysis:**
-  * Implemented byte-write frames, random-address reads, dummy write address latching, and write-protection (WP) pin control via `Wire.h`.
-  * Designed a 4-cycle state machine: Pre-Wash $\rightarrow$ Detergent Wash $\rightarrow$ Rinse $\rightarrow$ Spin Dry.
-  * **Power-Outage Fault Tolerance:** Continuously checkpoints the active cycle mode and remaining time counter into non-volatile EEPROM. Upon power recovery, the microcontroller reads the persisted state and resumes the washing cycle seamlessly.
-* **Deliverables:** Proteus project (`microlab7.pdsprj`), firmware (`code .txt`), bus timing captures, and laboratory report (`gozaresh (1).pdf`).
+### 6. Multi-Channel 12-Servo Automated Vending Dispenser (`microLab6/`)
+* **System Function:** Multi-tier inventory dispensing controller coordinating 12 independent servomotor-driven release mechanisms.
+* **Firmware Implementation:**
+  * 12-channel PWM servo control assigning dedicated angular rotational routines to each inventory slot.
+  * Two-digit customer product code selection and item count tracking displayed via $16\times 2$ LCD.
+  * 7-digit administrative master passcode authentication mode to initiate inventory restocking cycles.
 
 ---
 
-### Lab 8: Distributed Multi-Node Telemetry via SPI Bus (`microlab8 9731131 mahdi afarideh/`)
-* **Objective:** Synchronous, full-duplex Master-to-Multi-Slave distributed communication over the Serial Peripheral Interface (SPI).
-* **Hardware & Topology:** 3x Arduino Mega 2560 boards configured in a distributed bus topology:
-  * **Master Node:** Central coordinator, clock master (SCLK), transmitting commands and polling sensors.
-  * **Slave Node 1 (Light Telemetry):** Samples ambient room illuminance via LDR photoresistor voltage divider.
-  * **Slave Node 2 (Temperature Telemetry):** Samples ambient temperature via calibrated LM35 analog temperature sensor ($10\,\text{mV}/^\circ\text{C}$).
-* **Protocols & Analysis:**
-  * Shared bus lines (MOSI, MISO, SCLK) with independent Slave Select lines (SS1, SS2, SS3).
-  * Oscilloscope signal analysis verifying clock polarity/phase (CPOL/CPHA) and SPI transfer rates.
-  * Interrupt-driven SPI reception on slave nodes (`ISR(SPI_STC_vect)`).
-* **Deliverables:** Schematics (`microlab8.1.pdsprj`, `microlab8.2.pdsprj`), Master/Slave firmware variants, and lab report (`gozaresh.pdf`).
+### 7. Fault-Tolerant Controller with TWI / I2C External EEPROM State Persistence (`microlab7 9731131 mahdi afarideh/`)
+* **System Function:** 4-stage automated cycle controller featuring non-volatile state checkpointing to achieve complete power-loss fault tolerance.
+* **Firmware Implementation:**
+  * Communicates with an external **Atmel AT24C02 serial EEPROM ($2\,\text{Kbit}$)** over the Two-Wire Interface (TWI / $\text{I}^2\text{C}$), implementing byte writes, random-address reads, and dummy write address latching.
+  * Executes a 4-mode sequential state machine: Pre-Wash $\rightarrow$ Detergent Wash $\rightarrow$ Rinse $\rightarrow$ Spin Dry.
+  * **Power-Outage Recovery:** Continuously persists active cycle flags and remaining countdown timers to non-volatile EEPROM. Upon system boot/reset, firmware reads saved registers and resumes operation from the exact interrupted state.
 
 ---
 
-### Lab 9: Modular Audio Synthesis & Frequency Pitch Shifting (`microlab9_9731131_mahdi afarideh/`)
-* **Objective:** Piezoelectric sound generation, audio frequency synthesis, and modular header file architecture in embedded C++.
-* **Hardware:** Piezoelectric sounder transducer, $10\,\text{k}\Omega$ linear potentiometer (pitch control), pushbuttons.
-* **Acoustic & Firmware Engineering:**
-  * Modularized code architecture separating musical scale frequencies (`pitches.h`) and score arrangements (`themes.h`).
-  * Structured timing and rhythm representation for whole notes, half notes, quarter notes, eighth notes, and dotted durations.
-  * **Dynamic Pitch Transposition:** Utilized ADC readings from the potentiometer to dynamically transpose musical notes across higher and lower octaves in real time.
-  * Synthesized multi-track scores:
-    * Ludwig van Beethoven: *Ode to Joy* (from Symphony No. 9)
-    * J. Pierpont: *Jingle Bells*
-    * John Williams: *The Imperial March* (Star Wars Darth Vader's Theme)
-* **Deliverables:** Proteus circuit (`oslab9.pdsprj`), header files (`pitches.h`, `themes.h`), audio firmware, and report (`gozaresh.pdf`).
+### 8. Distributed Multi-Node Sensor Network via Synchronous SPI Bus (`microlab8 9731131 mahdi afarideh/`)
+* **System Function:** Full-duplex distributed telemetry network connecting a central Master MCU to multiple dedicated Slave sensor nodes over the SPI bus.
+* **System Topology & Protocols:**
+  * **Master Controller:** Central bus arbiter generating serial clock (SCLK) and toggling dedicated Slave Select (SS1, SS2, SS3) lines.
+  * **Slave Node 1 (Photometric Sensing):** Reads ambient illumination through a calibrated LDR photoresistor circuit and packages sensor telemetry.
+  * **Slave Node 2 (Thermal Sensing):** Samples room temperature via an analog LM35 precision temperature sensor ($10\,\text{mV}/^\circ\text{C}$).
+  * **Interrupt-Driven Reception:** Slave microcontrollers utilize interrupt service routines (`ISR(SPI_STC_vect)`) to capture and parse incoming packets without polling overhead.
+
+---
+
+### 9. Modular Audio Frequency Synthesizer & Dynamic Pitch Transposition (`microlab9_9731131_mahdi afarideh/`)
+* **System Function:** Microcontroller-based musical tone synthesizer generating calibrated audio waveforms through a piezoelectric sounder.
+* **Firmware Architecture:**
+  * Modular C++ header structure separating musical note frequency definitions (`pitches.h`) from score melodies and tempo durations (`themes.h`).
+  * Implemented fractional duration calculations for whole, half, quarter, eighth, and dotted note values.
+  * **Dynamic Pitch Transposition:** Reads real-time analog input from a linear potentiometer to dynamically modulate baseline frequency tables up or down across octaves during playback.
+  * Synthesized multi-track arrangements: Beethoven's *Ode to Joy*, *Jingle Bells*, and John Williams' *The Imperial March*.
 
 ---
 
 ## Technical Specifications & Tooling Summary
 
-* **Microcontroller Target:** Atmel AVR ATmega2560 ($16\,\text{MHz}$, 54 Digital I/O, 16 Analog ADC, 4 UARTs, TWI, SPI).
-* **Simulation Suite:** Labcenter Electronics Proteus VSM (Virtual System Modelling) v8.x.
-* **Firmware Languages:** C/C++ (Arduino framework & direct register manipulation), modular header architecture.
-* **Communication Protocols:** TWI / $\text{I}^2\text{C}$ (Standard $100\,\text{kHz}$), SPI (Full-duplex Master/Multi-Slave), Hardware UART.
-* **Actuators & Sensors:** SG90 Servomotors, SPDT Relays, LM35 Temperature Sensor, LDR Photocell, Piezo Sounders, Matrix Keypads, $16\times 2$ Character LCDs.
+* **Target Microcontroller:** Atmel AVR ATmega2560 ($16\,\text{MHz}$, 54 Digital I/O, 16 Analog Inputs, 4 Hardware UARTs, TWI, SPI).
+* **Simulation Software:** Labcenter Electronics Proteus VSM (Virtual System Modelling).
+* **Firmware Languages:** C/C++ (Direct register manipulation and standard Arduino runtime).
+* **Communication Protocols:** TWI / $\text{I}^2\text{C}$ ($100\,\text{kHz}$), SPI (Full-duplex Master/Multi-Slave), Hardware UART.
+* **Hardware Interfaced:** SG90 Servomotors, SPDT Relays, AT24C02 EEPROM, LM35 Temperature Sensor, LDR Photocells, Piezo Sounders, Matrix Keypads, HD44780 LCDs.

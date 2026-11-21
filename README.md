@@ -1,6 +1,6 @@
 # Smart Systems & Embedded Engineering Monorepo
 
-A unified engineering monorepo containing embedded firmware, IoT prototypes, microprocessor laboratory projects, and low-level assembly algorithms. All subprojects are verified through interactive Proteus circuit simulation and hardware prototyping, preserving full Git commit history.
+A unified engineering monorepo containing embedded firmware, IoT prototypes, microprocessor systems, and low-level assembly algorithms. All subprojects are verified through interactive Proteus circuit simulation and hardware prototyping, preserving full Git commit history.
 
 ## Monorepo Projects
 
@@ -11,12 +11,12 @@ A unified engineering monorepo containing embedded firmware, IoT prototypes, mic
 * **[smartScreen](projects/smartScreen/)**: Adaptive ambient light display dimmer utilizing LDR voltage division and dynamic 8-bit PWM backlight modulation.
 * **[attendanceCheck](projects/attendanceCheck/)**: Automated classroom attendance terminal with matrix keypad authentication and 10-minute late-cutoff logging.
 
-### 2. Microprocessor Systems & Hardware Labs
-* **[MicroprocessorProjects](projects/MicroprocessorProjects/)**: 9 progressive embedded hardware systems including:
-  * Distributed multi-node **SPI bus communication** across master and multiple slave MCUs.
-  * Fault-tolerant washing machine controller with non-volatile **EEPROM state persistence**.
-  * 12-channel automated vending machine servo dispenser.
-  * Matrix keypad integer calculator and alphanumeric 16x2 LCD drivers (4-bit/8-bit).
+### 2. Microprocessor & Embedded Firmware Suite
+* **[MicroprocessorProjects](projects/MicroprocessorProjects/)**: 9 modular embedded hardware and firmware systems:
+  * Distributed multi-node **SPI bus telemetry** across master and multiple slave MCUs.
+  * Fault-tolerant automated controller with non-volatile **TWI / I2C EEPROM state persistence**.
+  * 12-channel automated vending machine servo dispenser with administrative passcode override.
+  * Matrix keypad integer calculator and alphanumeric 16x2 LCD bus drivers (4-bit/8-bit).
   * Piezoelectric frequency tone synthesizer with potentiometer pitch shifting.
   * Transistorized relay switching circuits with inductive flyback protection.
 
@@ -29,7 +29,7 @@ A unified engineering monorepo containing embedded firmware, IoT prototypes, mic
 ---
 
 ## Technical Stack & Tooling
-* **Target Architectures:** Atmel AVR (ATmega328P), ARM Cortex-M / ARMv7 ISA.
+* **Target Architectures:** Atmel AVR (ATmega2560), ARM Cortex-M / ARMv7 ISA.
 * **Languages & Firmware:** Embedded C/C++, ARM Assembly.
-* **Protocols & Interfaces:** SPI (Master/Multi-Slave), Parallel LCD (4-bit / 8-bit), ADC, PWM, EEPROM.
+* **Protocols & Interfaces:** SPI (Master/Multi-Slave), TWI / $\text{I}^2\text{C}$, Parallel LCD (4-bit / 8-bit), ADC, PWM, EEPROM.
 * **Simulation & Design:** Proteus VSM Circuit Simulation, Keil $\mu$Vision, Arduino IDE, VisUAL.
