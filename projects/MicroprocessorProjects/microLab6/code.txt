@@ -1,0 +1,386 @@
+/*
+ * Arduino Keypad calculator Program
+ */
+
+#include <LiquidCrystal.h> //Header file for LCD from https://www.arduino.cc/en/Reference/LiquidCrystal
+#include <Keypad.h> //Header file for Keypad from https://github.com/Chris--A/Keypad
+#include <Servo.h>
+const byte ROWS = 4; // Four rows
+const byte COLS = 4; // Three columns
+Servo myservo;
+
+// Define the Keymap
+char keys[ROWS][COLS] = {
+
+  {'7','8','9','D'},
+
+  {'4','5','6','C'},
+
+  {'1','2','3','B'},
+
+  {'*','0','#','A'}
+
+};
+
+byte rowPins[ROWS] = { 0, 1, 2, 3 };// Connect keypad ROW0, ROW1, ROW2 and ROW3 to these Arduino pins.
+byte colPins[COLS] = { 4, 5, 6, 7 }; // Connect keypad COL0, COL1 and COL2 to these Arduino pins.
+
+Keypad kpd = Keypad( makeKeymap(keys), rowPins, colPins, ROWS, COLS ); //  Create the Keypad
+
+const int rs = 8, en = 9, d4 = 10, d5 = 11, d6 = 12, d7 = 13; //Pins to which LCD is connected
+LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+
+ long Num1,Number;
+ //Long Num2;
+ char key,action;
+ boolean result = false;
+ int password =24;
+ int timer=4;
+ boolean pas=false;
+ //int error =0;
+ //int mode=0;
+
+ 
+void setup() {
+  lcd.begin(16, 2); //We are using a 16*2 LCD display
+  pinMode(14,OUTPUT);
+  //pinMode(15,OUTPUT);
+  pinMode(16,OUTPUT);
+  lcd.print("enter"); //Display a intro message
+  lcd.setCursor(0, 1);   // set the cursor to column 0, line 1
+  lcd.print("pass"); //Display a intro message
+  myservo.attach(15);
+  myservo.write(0);  
+  delay(2000); //Wait for display to show info
+  lcd.clear(); //Then clean it
+}
+
+void loop() {
+//myservo.write(180);  
+  
+key = kpd.getKey(); //storing pressed key value in a char
+
+if (key!=NO_KEY)
+DetectButtons();
+
+if (result==true)
+CalculateResult();
+
+DisplayResult();   
+}
+
+void DetectButtons()
+{ 
+     lcd.clear(); //Then clean it
+    if (key=='*') //If cancel Button is pressed
+    {Serial.println ("Button Cancel"); Number=Num1=0;
+    //Num2=0;
+    ; result=false;}
+    
+     if (key == '1') //If Button 1 is pressed
+    {Serial.println ("Button 1"); 
+    if (Number==0)
+    Number=1;
+    else{
+    long temp=Number;
+    Number = (Number*10) + 1; //Pressed twice
+    if (String(temp,DEC ).length()>=4){
+      String temp1=String(temp,DEC);
+      temp1 = temp1.substring(1, (temp1.length()))+String(1,DEC);
+      Number=atol(temp1.c_str());
+    }
+    }
+    }
+    
+     if (key == '4') //If Button 4 is pressed
+    {Serial.println ("Button 4"); 
+    if (Number==0)
+    Number=4;
+    else{
+    long temp=Number;
+    Number = (Number*10) + 4; //Pressed twice
+    if (String(temp,DEC ).length()>=4 ){
+      String temp1=String(temp,DEC);
+      temp1 = temp1.substring(1, (temp1.length()))+String(4,DEC);
+      Number=atol(temp1.c_str());
+    }
+    }
+    }
+    
+     if (key == '7') //If Button 7 is pressed
+    {Serial.println ("Button 7");
+    if (Number==0)
+    Number=7;
+    else{
+    long temp=Number;
+    Number = (Number*10) + 7; //Pressed twice
+    if (String(temp,DEC ).length()>=4 ){
+      String temp1=String(temp,DEC);
+      temp1 = temp1.substring(1, (temp1.length()))+String(7,DEC);
+      Number=atol(temp1.c_str());
+    }
+    }
+    }
+  
+
+    if (key == '0')
+    {Serial.println ("Button 0"); //Button 0 is Pressed
+    if (Number==0)
+    Number=0;
+    else{
+      
+    long temp=Number;
+    Number = (Number*10) + 0; //Pressed twice
+    if (String(temp,DEC ).length()>=4 ){
+      String temp1=String(temp,DEC);
+      temp1 = temp1.substring(1, (temp1.length()))+String(0,DEC);
+      Number=atol(temp1.c_str());
+    }
+    }
+    }
+    
+     if (key == '2') //Button 2 is Pressed
+    {Serial.println ("Button 2"); 
+     if (Number==0)
+    Number=2;
+    else{
+    long temp=Number;
+    
+    Number = (Number*10) + 2; //Pressed twice
+    if (String(temp,DEC ).length()>=4 ){
+      String temp1=String(temp,DEC);
+      temp1 = temp1.substring(1, (temp1.length()))+String(2,DEC);
+      Number=atol(temp1.c_str());
+    }
+    }
+    }
+    
+     if (key == '5')
+    {Serial.println ("Button 5"); 
+     if (Number==0)
+    Number=5;
+    else{
+    long temp=Number;
+    
+    Number = (Number*10) + 5; //Pressed twice
+    if (String(temp,DEC ).length()>=4 ){
+      String temp1=String(temp,DEC);
+      temp1 = temp1.substring(1, (temp1.length()))+String(5,DEC);
+      Number=atol(temp1.c_str());
+    }
+    }
+    }
+    
+     if (key == '8')
+    {Serial.println ("Button 8"); 
+     if (Number==0)
+    Number=8;
+    else{
+    long temp=Number;
+    Number = (Number*10) + 8; //Pressed twice
+    if (String(temp,DEC ).length()>=4 ){
+      String temp1=String(temp,DEC);
+      temp1 = temp1.substring(1, (temp1.length()))+String(8,DEC);
+      Number=atol(temp1.c_str());
+    }
+    }
+    }   
+  
+
+    if (key == '#')
+    {Serial.println ("Button Equal"); 
+    //Num2=Number;
+    result = true;
+    }
+    
+     if (key == '3')
+    {Serial.println ("Button 3"); 
+     if (Number==0)
+    Number=3;
+    else
+    {
+    long temp=Number;
+    
+    Number = (Number*10) + 3; //Pressed twice
+    if (String(temp,DEC ).length()>=4 ){
+      String temp1=String(temp,DEC);
+      temp1 = temp1.substring(1, (temp1.length()))+String(3,DEC);
+      Number=atol(temp1.c_str());
+    }
+    }
+    }
+    
+     if (key == '6')
+    {Serial.println ("Button 6"); 
+    if (Number==0)
+    Number=6;
+    else{
+    long temp=Number;
+    
+    Number = (Number*10) + 6; //Pressed twice
+    if (String(temp,DEC ).length()>=4 ){
+      String temp1=String(temp,DEC);
+      temp1 = temp1.substring(1, (temp1.length()))+String(6,DEC);
+      Number=atol(temp1.c_str());
+    }
+    }
+    }
+    
+     if (key == '9')
+    {Serial.println ("Button 9");
+    if (Number==0)
+    Number=9;
+    else{
+    long temp=Number;
+    
+    Number = (Number*10) + 9; //Pressed twice
+    if (String(temp,DEC ).length()>=4 ){
+      String temp1=String(temp,DEC);
+      temp1 = temp1.substring(1, (temp1.length()))+String(9,DEC);
+      Number=atol(temp1.c_str());
+    }
+    }
+    }  
+
+      if (key == 'A' || key == 'B' || key == 'C' || key == 'D') //Detecting Buttons on Column 4
+  {
+    Num1 = Number;    
+    Number =0;
+    if (key == 'A')
+    {Serial.println ("Addition"); action = '+';}
+     if (key == 'B')
+    {Serial.println ("Subtraction"); action = '-'; }
+     if (key == 'C')
+    {Serial.println ("Multiplication"); action = '*';}
+     if (key == 'D')
+    {Serial.println ("Devesion"); action = '/';}  
+
+    delay(100);
+  }
+  
+}
+
+void CalculateResult()
+{
+  if (action=='+' and pas==false){
+
+    if(Num1==password){
+      
+      //lcd.print("pas is");
+      //lcd.print(password);
+      delay(1000);
+      lcd.clear();
+      //lcd.print("number is");
+      //lcd.print(Num1);
+      delay(1000);
+      //Num1=-1;
+      lcd.clear();
+      pas=true;
+      lcd.clear();
+      lcd.print("door opened");
+      lcd.setCursor(0,1);
+      lcd.print("admin mode");
+      delay(1000);
+      lcd.clear();
+    
+      //digitalWrite(15,HIGH);
+      myservo.write(180);
+      digitalWrite(14,HIGH);
+      digitalWrite(16,HIGH);
+      delay(1000);
+      digitalWrite(16,LOW);
+  //key =NO_KEY;
+  lcd.print("timer begun");
+  delay(1000);
+  lcd.clear();
+  for (int i=0; (i<timer) ; i++) {
+  lcd.clear();
+  lcd.print(i);
+  delay(1000);
+  lcd.clear();
+  //key = kpd.getKey();
+  }
+  key = kpd.getKey();
+  lcd.print("timer");
+  lcd.print("finished");
+  delay(1000);
+  lcd.clear();
+  //key = kpd.getKey();
+  if(key=='#'){
+  action='-';
+  CalculateResult();
+  result=false;
+  
+  }    
+  }
+  else {
+  lcd.print("wrong ");
+  //lcd.print("wrong ");
+  delay(1000);
+  lcd.clear();
+  result=false;
+  }
+  }
+      
+    
+    
+    
+  
+    
+  else if (action=='-' and pas==true){
+     pas=false;
+    lcd.clear();
+    lcd.print("door closed");
+    //lcd.print("admin mode");
+    delay(2000);
+    lcd.clear();
+    //digitalWrite(15,LOW);
+     myservo.write(0);
+    digitalWrite(14,LOW);
+    digitalWrite(16,HIGH);
+    delay(1000);
+    digitalWrite(16,LOW);
+    result=false;
+    
+    
+  }
+
+  else if (action=='*' and pas==true){
+    password=Num1;
+    pas=false;
+     lcd.clear();
+    lcd.print("pass changed");
+    delay(1000);
+    lcd.clear();
+    result=false;
+    
+  }
+
+  else if (action=='/' and pas==true){
+      timer=Num1;
+      pas=false;
+       lcd.clear();
+    lcd.print("timer changed");
+    delay(1000);
+    lcd.clear();
+    result=false;
+    
+  }
+}
+
+void DisplayResult()
+{
+  lcd.setCursor(0, 0);   // set the cursor to column 0, line 1
+  lcd.print(Num1); lcd.print(action); 
+  
+ 
+  lcd.setCursor(0, 1);   // set the cursor to column 0, line 1
+  lcd.print(Number);
+  
+  
+}
+
+
+
+
+

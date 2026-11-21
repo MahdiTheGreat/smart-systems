@@ -1,0 +1,44 @@
+#include "pitches.h"
+
+
+int melody[] = { NOTE_E5, NOTE_E5, NOTE_E5, NOTE_E5, NOTE_E5, NOTE_E5, NOTE_E5, NOTE_G5, NOTE_C5, NOTE_D5, NOTE_E5, NOTE_F5, NOTE_F5, 
+NOTE_F5, NOTE_F5, NOTE_F5, NOTE_E5, NOTE_E5, NOTE_E5, NOTE_E5, NOTE_E5, NOTE_D5, NOTE_D5, NOTE_E5, NOTE_D5, NOTE_G5 }; 
+
+int melodyHigh[] = { NOTE_F5, NOTE_F5, NOTE_F5, NOTE_F5, NOTE_F5, NOTE_F5, NOTE_F5, NOTE_A5, NOTE_E5, NOTE_E5, NOTE_F5, NOTE_F5, NOTE_F5, 
+NOTE_F5, NOTE_F5, NOTE_F5, NOTE_F5, NOTE_F5, NOTE_F5, NOTE_F5, NOTE_F5, NOTE_E5, NOTE_E5, NOTE_F5, NOTE_E5, NOTE_A5 };
+
+int melodyLow[] = { NOTE_D5, NOTE_D5, NOTE_D5, NOTE_D5, NOTE_D5, NOTE_D5, NOTE_D5, NOTE_F5, NOTE_B4, NOTE_C5, NOTE_D5, NOTE_F5, NOTE_F5, 
+NOTE_F5, NOTE_F5, NOTE_F5, NOTE_D5, NOTE_D5, NOTE_D5, NOTE_D5, NOTE_D5, NOTE_C5, NOTE_C5, NOTE_D5, NOTE_C5, NOTE_F5 }; 
+
+int noteDurations[] = { 4, 4, 2, 4, 4, 2, 4, 4, 3, 8, 1, 4, 4, 4, 4, 4, 4, 8, 4, 8, 4, 4, 4, 4, 2, 2 };
+
+void setup() {
+  // put your setup code here, to run once:
+analogReference(DEFAULT);
+pinMode(A8, INPUT);
+
+
+}
+
+void loop() {
+  
+   
+  // put your main code here, to run repeatedly:
+int bt1 = digitalRead(0);
+
+if(bt1==HIGH){
+  for(int i=0;i<26;i++){
+    int temp=analogRead(A8);
+    int pot=map(temp, 0, 1023, 0, 5);
+    if(pot>3){
+    tone(1,melodyHigh[i],500/noteDurations[i]);
+    }
+    else if(pot<1){
+    tone(1,melodyLow[i],500/noteDurations[i]);
+    }
+    else tone(1,melody[i],500/noteDurations[i]);
+    delay(500/noteDurations[i]);
+  }
+}
+
+}

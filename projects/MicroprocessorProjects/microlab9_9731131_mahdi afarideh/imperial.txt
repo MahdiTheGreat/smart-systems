@@ -1,0 +1,32 @@
+#include "pitches.h"
+
+
+int melody[] = { NOTE_GS4, NOTE_GS4, NOTE_GS4, NOTE_DS4, NOTE_AS4,NOTE_GS4, NOTE_DS4, NOTE_AS4,NOTE_GS4 , NOTE_DS5,NOTE_DS5,NOTE_DS5, NOTE_E5, NOTE_B4,NOTE_GS4 , 
+NOTE_DS4,NOTE_AS4, NOTE_GS4, NOTE_GS5, NOTE_GS4, NOTE_GS4,NOTE_GS5,NOTE_GS5, NOTE_FS5, NOTE_E5, NOTE_E5,NOTE_E5,NOTE_GS4, 
+ NOTE_DS5,NOTE_CS5,NOTE_B4,NOTE_B4,NOTE_A4,NOTE_B4,NOTE_E4,NOTE_GS4,NOTE_DS4,NOTE_GS4,NOTE_AS4,NOTE_GS4,NOTE_AS4,NOTE_DS5};
+                            //
+
+float noteDurations[] = { 4, 4,4,6,16,4,6,16,2,4,4,4,6,16,4,6,16,2,4,6,16,4,6,16,16,16,8,8,4,6,16,16,16,8,8,4,6,16,4,6,16,2};
+
+void setup() {
+  // put your setup code here, to run once:
+
+
+
+}
+
+void loop() {
+  
+   
+  // put your main code here, to run repeatedly:
+int bt1 = digitalRead(0);
+
+if(bt1==HIGH){
+  for(int i=0;i<42;i++){
+    
+    tone(1,melody[i],500/noteDurations[i]);
+    delay(500/noteDurations[i]);
+  }
+}
+
+}

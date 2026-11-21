@@ -1,0 +1,54 @@
+#include<SPI.h>
+#include <LiquidCrystal.h>
+
+volatile boolean received;
+volatile byte Slavereceived,Slavesend;
+
+String x="";
+char c;
+int i=0;
+const int rs = 8, en = 9, d4 = 10, d5 = 11, d6 = 12, d7 = 13; //Pins to which LCD is connected
+LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+
+void setup()
+
+{
+  Serial.begin(115200);
+  lcd.begin(16, 2);
+  
+                  // Setting pin 7 as OUTPUT
+  pinMode(50,OUTPUT);                   //Sets MISO as OUTPUT (Have to Send data to Master IN 
+
+  SPCR |= _BV(SPE);                       //Turn on SPI in Slave Mode
+  received = false;
+
+  SPI.attachInterrupt();                  //Interuupt ON is set for SPI commnucation
+  
+}
+
+ISR (SPI_STC_vect)                        //Inerrrput routine function 
+{
+  Slavereceived = SPDR;// Value received from master if store in variable slavereceived
+  received = true;                        //Sets received as True 
+}
+
+void loop()
+{ if(received)                            //Logic to SET LED ON OR OFF depending upon the value recerived from master
+   {
+      
+  c= Slavereceived;
+  i++;
+  x=x+c;
+  if(i==11){
+    x="";
+    i=0;   
+  }
+
+  lcd.print(x);
+  
+  received=false;                          
+                          //Sends the x value to master via SPDR 
+  delay(1000);
+  lcd.clear();
+}
+}
