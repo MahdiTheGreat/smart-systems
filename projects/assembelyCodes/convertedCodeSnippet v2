@@ -1,0 +1,23 @@
+		ldr		R0,=0x40000000 ;this is address
+		ldr		R1,=0x0 ;this is sum
+		ldr		r2,=0x14 ;this is i
+		ldr		r3,=0x1 
+		ldr       r4,=0x4 
+		
+		
+		
+		sub r0,r0,r4
+again	add r0,r0,r4	
+		ldr r5,[r0]
+		add r1,r1,r5
+		subs r2,r2,r3
+		bne again
+;code snippet
+;int *ptr;
+;int sum = 0; 
+;for (int i=0; i<20; i++)
+;sum += *(ptr++);
+
+
+		
+		

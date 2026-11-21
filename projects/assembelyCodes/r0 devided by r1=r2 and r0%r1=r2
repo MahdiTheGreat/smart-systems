@@ -1,0 +1,19 @@
+		ldr		R0,=0xd ;this is r0
+		ldr		r1,=0x4
+		ldr		R2,=0x0
+		ldr		R3,=0x0
+		ldr		R5,=0x0
+		ldr		R6,=0x1
+		mov		r3,r0
+		cmp		r1,r0
+		bhi		finish
+		
+again	mov		r3,r0
+		subs		r0,r0,r1
+		add		r2,r2,r6
+		bpl		again
+		sub		r2,r2,r6
+		
+finish
+		
+		

@@ -1,0 +1,8 @@
+		ldr		R0,=0x15 ;thisIsI
+		ldr		R1,=0x2 ;thisIsJ
+		ldr		R5,=0x0
+		ldr		R6,=0x1
+again	adds		r1,r1,r1
+		adc		R4,R4,R5
+		subs		r0,r0,R6
+		bne		again

@@ -1,0 +1,10 @@
+		ldr		R1,=0x2 ;thisiSR0
+		ldr		R2,=0x6 ;thisiSR1
+		ldr		R3,=0x0
+		ldr		R4,=0x0
+		ldr		R5,=0x0
+		ldr		R6,=0x1
+again	adds		r3,r3,r1
+		adc		R4,R4,R5
+		subs		r2,r2,R6
+		bne		again

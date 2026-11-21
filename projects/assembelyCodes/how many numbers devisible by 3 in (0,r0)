@@ -1,0 +1,25 @@
+		ldr		R0,=0x0 ;this is r1
+		ldr		R1,=0x2 ;this is r0
+		ldr		r2,=0x0
+		ldr		r3,=0x3
+		ldr		r4,=0x1
+		ldr		r5,=0x1
+		ldr		r6,=0x1
+		
+		
+		
+		
+		
+		
+again	add		r0,r0,r5
+		subs		r4,r4,r3
+		addmi	r6,r6,r5
+		movmi	r4,r6
+		ldreq	r6,=0x1
+		ldreq	r4,=0x1
+		addeq	r2,r2,r5
+		subs		r1,r1,r5
+		bne		again
+		
+		
+		
