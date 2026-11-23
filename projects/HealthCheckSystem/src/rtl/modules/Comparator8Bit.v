@@ -2,20 +2,9 @@
 `default_nettype none
 
 /*
-**********************************************************
-** Logic Design Final Project Fall, 2019 Semester
-** Amirkabir University of Technology (Tehran Polytechnic)
-** Department of Computer Engineering (CEIT-AUT)
-** Logic Circuit Design Laboratory
-** https://ceit.aut.ac.ir
-**********************************************************
-** Student ID: 9623105
-** Student ID: 9731131
-**********************************************************
-** Module Name: Comparator8Bit
-**********************************************************
-** Additional Comments:
-*/
+ * Biomedical Diagnostic Digital Logic Coprocessor
+ * Module / Component: Comparator8Bit
+ */
 
 module Comparator8Bit(
         inputP,

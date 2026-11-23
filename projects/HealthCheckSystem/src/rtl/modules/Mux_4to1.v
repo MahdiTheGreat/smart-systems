@@ -2,20 +2,9 @@
 `default_nettype none
 
 /*
-**********************************************************
-** Logic Design Final Project Fall, 2019 Semester
-** Amirkabir University of Technology (Tehran Polytechnic)
-** Department of Computer Engineering (CEIT-AUT)
-** Logic Circuit Design Laboratory
-** https://ceit.aut.ac.ir
-**********************************************************
-** Student ID: 9623105
-** Student ID: 9731131
-**********************************************************
-** Module Name: Mux_4to1
-**********************************************************
-** Additional Comments:
-*/
+ * Biomedical Diagnostic Digital Logic Coprocessor
+ * Module / Component: Mux_4to1
+ */
 
 module Mux_4to1(
         i0, i1, i2, i3,

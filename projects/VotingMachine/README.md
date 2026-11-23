@@ -13,4 +13,4 @@ A distributed electronic voting architecture designed for secure, multi-terminal
   * **Universal Asynchronous Receiver-Transmitter (UART):** Point-to-point asynchronous terminal communications with hardware flow control.
 * **Reliability & Tamper-Resistance:**
   * Non-volatile EEPROM storage preserving candidate tallies and vote counts against system restarts and power interruptions.
-  * Verified across multiple operational topologies in **Proteus VSM** simulation environments (`microlab final v8 serial and spi and i2c scneario2.pdsprj`, `scenario3`, etc.).
+  * Verified across multiple operational topologies in **Proteus VSM** simulation environments (multi-scenario models covering serial, SPI, and $\text{I}^2\text{C}$ interconnect topologies).

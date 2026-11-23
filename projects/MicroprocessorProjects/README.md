@@ -6,7 +6,7 @@ A collection of 9 modular embedded firmware systems and circuit designs implemen
 
 ## Systems & Firmware Architecture
 
-### 1. Multi-Directional GPIO State Controller (`microProcessorLab1/`)
+### 1. Multi-Directional GPIO State Controller (`microlab1/`)
 * **System Function:** Manages bi-directional sequential illumination across an 8-LED output array driven by an asynchronous 3-button digital state machine.
 * **Firmware Implementation:**
   * Left-to-Right Scan: Progressively indexes and latches active LED output pins with millisecond debounce filtering.
@@ -26,7 +26,7 @@ A collection of 9 modular embedded firmware systems and circuit designs implemen
 
 ---
 
-### 3. Alphanumeric LCD Bus Driver & Embedded Calculator (`MicroLab3/`)
+### 3. Alphanumeric LCD Bus Driver & Embedded Calculator (`microlab3/`)
 * **System Function:** High-speed alphanumeric text rendering and an embedded four-function integer arithmetic calculation engine.
 * **Firmware Implementation:**
   * Parallel bus interfacing for standard HD44780-compatible $16\times 2$ character LCDs, evaluating both **4-bit nibble mode** and **8-bit parallel mode** with Register Select (RS), Read/Write (RW), and Enable strobe timing.
@@ -36,7 +36,7 @@ A collection of 9 modular embedded firmware systems and circuit designs implemen
 
 ---
 
-### 4. Precision PWM Servomotor Actuator & ADC Tracking (`microlab4_9731131_mahdi afarideh/`)
+### 4. Precision PWM Servomotor Actuator & ADC Tracking (`microlab4/`)
 * **System Function:** Angular position control ($0^\circ-180^\circ$) of servomotors using timer-driven Pulse Width Modulation (PWM) and closed-loop analog feedback.
 * **Firmware Implementation:**
   * Generated precise $50\,\text{Hz}$ PWM signals ($20\,\text{ms}$ period with $1.0\,\text{ms}-2.0\,\text{ms}$ active duty cycle pulses) mapped to angular position.
@@ -45,7 +45,7 @@ A collection of 9 modular embedded firmware systems and circuit designs implemen
 
 ---
 
-### 5. Transistorized Relay Switching & Inductive Load Driver (`microlab5_9731131_mahdi afarideh/`)
+### 5. Transistorized Relay Switching & Inductive Load Driver (`microlab5/`)
 * **System Function:** High-current/high-voltage DC actuator switching circuit designed to isolate microcontroller logic from noisy inductive loads.
 * **Circuit Design & Electrical Analysis:**
   * Solved the GPIO pin drive limitation ($40\,\text{mA}$ absolute maximum) by designing a discrete NPN BJT driver (2N2222) operating strictly in the **saturation region** ($I_B > I_{C(\text{sat})}/\beta$) to minimize conduction losses ($V_{CE(\text{sat})} \approx 0.1-0.2\,\text{V}$).
@@ -54,7 +54,7 @@ A collection of 9 modular embedded firmware systems and circuit designs implemen
 
 ---
 
-### 6. Multi-Channel 12-Servo Automated Vending Dispenser (`microLab6/`)
+### 6. Multi-Channel 12-Servo Automated Vending Dispenser (`microlab6/`)
 * **System Function:** Multi-tier inventory dispensing controller coordinating 12 independent servomotor-driven release mechanisms.
 * **Firmware Implementation:**
   * 12-channel PWM servo control assigning dedicated angular rotational routines to each inventory slot.
@@ -63,7 +63,7 @@ A collection of 9 modular embedded firmware systems and circuit designs implemen
 
 ---
 
-### 7. Fault-Tolerant Controller with TWI / I2C External EEPROM State Persistence (`microlab7 9731131 mahdi afarideh/`)
+### 7. Fault-Tolerant Controller with TWI / I2C External EEPROM State Persistence (`microlab7/`)
 * **System Function:** 4-stage automated cycle controller featuring non-volatile state checkpointing to achieve complete power-loss fault tolerance.
 * **Firmware Implementation:**
   * Communicates with an external **Atmel AT24C02 serial EEPROM ($2\,\text{Kbit}$)** over the Two-Wire Interface (TWI / $\text{I}^2\text{C}$), implementing byte writes, random-address reads, and dummy write address latching.
@@ -72,7 +72,7 @@ A collection of 9 modular embedded firmware systems and circuit designs implemen
 
 ---
 
-### 8. Distributed Multi-Node Sensor Network via Synchronous SPI Bus (`microlab8 9731131 mahdi afarideh/`)
+### 8. Distributed Multi-Node Sensor Network via Synchronous SPI Bus (`microlab8/`)
 * **System Function:** Full-duplex distributed telemetry network connecting a central Master MCU to multiple dedicated Slave sensor nodes over the SPI bus.
 * **System Topology & Protocols:**
   * **Master Controller:** Central bus arbiter generating serial clock (SCLK) and toggling dedicated Slave Select (SS1, SS2, SS3) lines.
@@ -82,7 +82,7 @@ A collection of 9 modular embedded firmware systems and circuit designs implemen
 
 ---
 
-### 9. Modular Audio Frequency Synthesizer & Dynamic Pitch Transposition (`microlab9_9731131_mahdi afarideh/`)
+### 9. Modular Audio Frequency Synthesizer & Dynamic Pitch Transposition (`microlab9/`)
 * **System Function:** Microcontroller-based musical tone synthesizer generating calibrated audio waveforms through a piezoelectric sounder.
 * **Firmware Architecture:**
   * Modular C++ header structure separating musical note frequency definitions (`pitches.h`) from score melodies and tempo durations (`themes.h`).

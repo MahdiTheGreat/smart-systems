@@ -2,20 +2,9 @@
 `default_nettype none
 
 /*
-**********************************************************
-** Logic Design Final Project Fall, 2019 Semester
-** Amirkabir University of Technology (Tehran Polytechnic)
-** Department of Computer Engineering (CEIT-AUT)
-** Logic Circuit Design Laboratory
-** https://ceit.aut.ac.ir
-**********************************************************
-** Student ID: XXXXXXX
-** Student ID: XXXXXXX
-**********************************************************
-** Module Name:
-**********************************************************
-** Additional Comments:
-*/
+ * Biomedical Diagnostic Digital Logic Coprocessor
+ * Module / Component: BloodPHAnalyzer
+ */
 
 module BloodPHAnalyzer(ph,abnormalp,abnormalq);
 input [3:0]ph;

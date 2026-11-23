@@ -1,20 +1,9 @@
 `timescale 1ns / 1ps
 
 /*
-**********************************************************
-** Logic Design Final Project Fall, 2019 Semester
-** Amirkabir University of Technology (Tehran Polytechnic)
-** Department of Computer Engineering (CEIT-AUT)
-** Logic Circuit Design Laboratory
-** https://ceit.aut.ac.ir
-**********************************************************
-** Student ID: XXXXXXX
-** Student ID: XXXXXXX
-**********************************************************
-** Module Name: HealthcareSystemFirstPhase
-**********************************************************
-** Additional Comments:
-*/
+ * Biomedical Diagnostic Digital Logic Coprocessor
+ * Module / Component: LogicHealthcareSystemTestBench
+ */
 
 module LogicHealthcareSystemTestBench;
 

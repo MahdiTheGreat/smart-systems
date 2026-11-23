@@ -2,20 +2,9 @@
 `default_nettype none
 
 /*
-**********************************************************
-** Logic Design Final Project Fall, 2019 Semester
-** Amirkabir University of Technology (Tehran Polytechnic)
-** Department of Computer Engineering (CEIT-AUT)
-** Logic Circuit Design Laboratory
-** https://ceit.aut.ac.ir
-**********************************************************
-** Student ID: 9623105
-** Student ID: 9731131
-**********************************************************
-** Module Name: Fulladder_8bit
-**********************************************************
-** Additional Comments:
-*/
+ * Biomedical Diagnostic Digital Logic Coprocessor
+ * Module / Component: Fulladder_8bit
+ */
 
 module Fulladder_8bit(a, b, select, s, cout);
 input [7:0] a;

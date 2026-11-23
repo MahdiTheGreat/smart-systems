@@ -1,7 +1,9 @@
 
-#THIS ASSIGNMENT WAS DONE BY ONE PERSON
-#NAME:Mahdi Afarideh
-#Student Number:9731131
+"""
+CPU Cache Hierarchy Simulator
+Models unified and split (Harvard) cache architectures, direct-mapped, set-associative,
+and fully associative topologies with LRU replacement and configurable write policies.
+"""
 
 
 import gc
@@ -541,10 +543,6 @@ if(wriAllMode[1]=="wa"):
 else:print("demand fetch: " + str(int(blsize_arch_ass[0]/ 4)*misCopRepFet[3]))
 print("copies back: " + str( misCopRepFet[1]))
 
-
-#THIS ASSIGNMENT WAS DONE BY ONE PERSON
-#NAME:Mahdi Afarideh
-#Student Number:9731131
 
 
 
