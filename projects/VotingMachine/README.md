@@ -1,15 +1,16 @@
-# VotingMachine
-an implementation of a voting machine,with a master arduino board sending the questions,and collecting the votes of the slave arduinos.
+# Heterogeneous Multi-Protocol Electronic Voting System
 
-with a combined use of spi,i2c and uart transmition protocals,we are able to send all the questions to the voting machines at once,and then collect the results,with round-robin scheduling, while also enabling the voters to take back their votes, in case of a mistake.
+A distributed electronic voting architecture designed for secure, multi-terminal election environments, integrating diverse communication protocols and non-volatile result persistence.
 
-to send a vote, voter has to select the option they want and then press +. to take back a vote, voters have to select the option they have voted on,and then press the - button to take the vote back.
+## System Architecture
 
-all the slaves have no internal memory, so the voting process is discrete.
-
-the implementation is done with the help of the arduino ide and the proteus envirement.
-
-the implementation supports three scenarios:
-1-we only use uart
-2-three slave use uart and the fourth one uses i2c
-3-like 3,but now 2 slaves use i2c,and we can expand this for 2^7-1 slaves
+* **Multi-Node Bus Topology:**
+  * **Master Central Unit:** Central polling coordinator and election aggregator.
+  * **Remote Voting Terminals:** Distributed voter interface stations capturing authenticated input and transmitting vote packets.
+* **Heterogeneous Communication Interfaces:**
+  * **Serial Peripheral Interface (SPI):** High-speed synchronous voting data transfer between master and co-located peripheral controllers.
+  * **Two-Wire Interface (TWI / $\text{I}^2\text{C}$):** Multi-drop bus addressing distributed terminal nodes and persistent memory modules.
+  * **Universal Asynchronous Receiver-Transmitter (UART):** Point-to-point asynchronous terminal communications with hardware flow control.
+* **Reliability & Tamper-Resistance:**
+  * Non-volatile EEPROM storage preserving candidate tallies and vote counts against system restarts and power interruptions.
+  * Verified across multiple operational topologies in **Proteus VSM** simulation environments (`microlab final v8 serial and spi and i2c scneario2.pdsprj`, `scenario3`, etc.).
