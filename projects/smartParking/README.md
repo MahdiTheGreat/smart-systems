@@ -1,18 +1,30 @@
-# Multi-Bay Smart Parking Management System
+# smartParking
+A certain commercial complex has asked us to design a smart parking lot that will ease the work of the parking attendants.
+The parking lot should include the following features:
+1- The light (LED) above each parking lot should show the empty or full status of the parking lot.
+2- The number of empty spaces in each parking floor and the total number of empty spaces in the monitor (LED)
+must be shown.
+3- To enter the parking lot, each car first enters the ID and password on the keypad. 
+If the information is confirmed and at least one parking space is empty, the parking door (servo motor)
+will open and the appropriate message will be displayed on the monitor.
+If the information is confirmed. or there was no parking space in the parking lot, 
+the parking lot door does not open and the appropriate message is displayed on the monitor.
+4- When leaving, each car also enters the information (ID and password) in the keypad, if the information is confirmed,
+the calculated payment amount is displayed on the monitor and then the parking lot door is opened.
+5- To calculate the parking fee, get the time that each car was in the parking lot and display an amount on the LCD based on that.
 
-An automated multi-level parking facility management controller implemented on the **Atmel AVR (ATmega2560)** architecture, coordinating ultrasonic and infrared occupancy detection, automated servo gate barriers, real-time LCD capacity telemetry, and duration-based tariff computation.
+![image](assets/image_1.png)
 
----
+We must Pay attention to the following points for implementation:
+•	Consider a parking lot with 3 floors and 3 parking spaces on each floor.
+•	you can use LM041L LCD to show the parking capacity information in the first 2 lines
+information during entry and exit or the appropriate message in the last 2 lines. (As in the figure below,
+the floors should be shown with the letters A, B, C, and the total empty capacity with the letter t).
 
-## System Architecture & Features
+![image](assets/image_2.png)
 
-* **Multi-Level Occupancy Monitoring:**
-  * Monitors 3 distinct parking levels (Levels A, B, C) with 3 dedicated bays per floor (9 total parking bays).
-  * Passive Infrared (PIR) and optical sensors per bay provide real-time occupancy status inputs (`testPin = 0/1`).
-  * Dedicated dual-state LED indicators per bay signal vacant (Green) vs. occupied (Red) status.
-* **Telemetry & Display Interface:**
-  * Interfaced with a 4-line alphanumeric display (`LM041L`), presenting per-floor vacancy counts (Levels A, B, C) and aggregate facility capacity in real time.
-* **Access Control & Fee Processing:**
-  * **Entry Protocol:** Authenticates driver ID and PIN via a matrix keypad; verifies system capacity across all levels and triggers servo motor gate actuation upon confirmed vacancy.
-  * **Exit Protocol & Tariff Billing:** Prompts driver credentials at exit, tracks total parking duration, computes dynamic billing tariffs based on elapsed hours, and triggers the exit servo barrier upon payment acknowledgment.
-* **Simulation & Hardware Verification:** Validated via interactive circuit simulation in **Proteus VSM** with complete AVR firmware logic.
+Use the PIR sensor to detect the car in each pocket and set its input (testPin) to 0 or 1.
+•	In this project, we use the Arduino Mega 2560 so as not to be limited by the number of pins.
+•	The user must use the keypad to specify that he is entering or leaving the parking lot.
+•	we put the saved ID and password in your code (we can save it in an array or in a file) 
+and enter the same ID and password in the Keypad to test the scenario.

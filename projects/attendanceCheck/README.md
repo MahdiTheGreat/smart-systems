@@ -1,15 +1,14 @@
-# Automated Classroom Attendance Terminal
+# attendanceCheck
 
-An embedded authentication and check-in terminal designed on the **Atmel AVR (ATmega2560)** architecture, integrating matrix keypad authentication, LCD status telemetry, servo gate actuation, and strict time-window arrival tracking.
+Dr. Bahman is tired of paper-based and time-consuming class attendance and also wants to
+People who entered the class 10 minutes later than the start time will be considered absent. The doctor knows that everyone
+Students have their own ID and it requires you to create a system for attendance and absence like Figure below.
 
----
+![image](assets/image_1.png)
 
-## System Architecture
-
-* **Matrix Keypad Interface:** Captures user numeric student identification numbers with real-time software debouncing and character buffer latching.
-* **Alphanumeric LCD Telemetry:** Displays ID input confirmation, real-time elapsed session time, and access grant/deny status messages.
-* **Access Control Actuation:**
-  * **On-Time Check-In ($\le 10$ minutes):** Validates ID within the permissible arrival window, illuminates an active green indicator LED for 3 seconds, and actuates a servo motor barrier to grant physical entry.
-  * **Tardy / Invalid Attempt ($> 10$ minutes):** Triggers a 1-second audible warning buzzer alert, holds the servo barrier closed, and updates LCD telemetry with the exact late duration.
-* **Session Roster Persistence:** Compiles internal session rosters recording verified attendees and flagging absent records at the conclusion of the check-in period.
-* **Circuit Verification:** Modeled and simulated interactively in **Proteus VSM** with complete register-level AVR C/C++ firmware.
+The program displays the ID on the LCD by entering the ID on the Keypad and if it is within the allowed time interval,
+an LED will light up for 3 seconds and the servo motor will be in the opening state, otherwise the Buzzer will sound for 1 second and
+It will sound and the servo motor will remain closed and the LCD will show the elapsed time of the class so that
+the student will be aware of his delay!!! 
+Also, at the end of the class, the names of the present and absent persons should be announced in the form of a list. 
+Note that even if a person does not show his ID, he will be on the absentee list at the end of the class.
